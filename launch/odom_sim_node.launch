@@ -1,5 +1,5 @@
 <launch>
-  <param name="robot_description" textfile="$(find mobile_robot_simulator)/urdf/agv_skeleton.urdf"/>
+  <param name="robot_description" textfile="$(find mobile_robot_simulator)/urdf/mobile_robot.urdf"/>
   <node pkg="mobile_robot_simulator" type="odom_sim_node" name="odom_simulator" output="screen">
     <param name="max_heading_accel" type="double" value="1.0" />
     <param name="max_rotation_accel" type="double" value="1.0" />

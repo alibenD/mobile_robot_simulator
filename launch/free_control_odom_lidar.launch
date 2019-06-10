@@ -5,13 +5,13 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-11-06 09:46:30
-  * @last_modified_date: 2019-06-10 13:17:03
+  * @last_modified_date: 2019-06-10 13:37:19
   * @brief: TODO
   * @details: TODO
   *-->
 
 <launch>
-  <param name="robot_description" textfile="$(find mobile_robot_simulator)/urdf/agv_skeleton.urdf"/>
+  <param name="robot_description" textfile="$(find mobile_robot_simulator)/urdf/mobile_robot.urdf"/>
 
   <node pkg="mobile_robot_simulator" type="odom_sim_node" name="odom_simulator" output="screen">
     <param name="max_heading_accel" type="double" value="1.0" />
