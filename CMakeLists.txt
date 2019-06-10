@@ -121,7 +121,7 @@ catkin_package(
   INCLUDE_DIRS include
   LIBRARIES mobile_robot_simulator
   CATKIN_DEPENDS interactive_markers message_generation nav_msgs roscpp tf visualization_msgs
-  DEPENDS system_lib
+  #DEPENDS system_lib
 )
 
 ###########
