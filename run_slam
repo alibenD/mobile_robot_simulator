@@ -18,7 +18,6 @@ MAP_PATH=$1
 MAP_FILENAME=${1##*/}
 
 #---Shell Command
-set -x
 if [ ! -f launch/move_base_${MAP_FILENAME%.*}.launch  ]; then
   sed 's#map_filename#'$MAP_PATH'#g' launch/move_base_templete.launch > `rospack find mobile_robot_simulator`/launch/move_base_${MAP_FILENAME%.*}.launch
 fi
@@ -33,7 +32,7 @@ gnome-terminal --window -e "rostopic pub -1 /initialpose geometry_msgs/PoseWithC
   stamp:
     secs: 0
     nsecs: 0
-  frame_id: ''
+  frame_id: 'map'
 pose:
   pose:
     position: {x: 0.0, y: 0.0, z: 0.0}
@@ -42,4 +41,3 @@ pose:
     0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\" " &&
 fg %1
-set +x

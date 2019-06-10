@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-02-29 16:59:46
-  * @last_modified_date: 2019-06-10 10:54:22
+  * @last_modified_date: 2019-06-10 16:58:38
   * @brief: TODO
   * @details: TODO
   */
@@ -142,6 +142,7 @@ namespace ak
     current_time_ = ros::Time::now();
     last_time_ = ros::Time::now();
     last_odom_time_ = ros::Time::now();
+    static size_t count_output = 2000;
     while(ptr_nh_->ok())
     {
       current_time_ = ros::Time::now();
@@ -150,16 +151,18 @@ namespace ak
       this->boardcastTF();
       this->publishOdom();
       ros::spinOnce();
-      if((current_time_ - last_callback_).toSec() > cmd_timeout_)
+      if((current_time_ - last_callback_).toSec() > cmd_timeout_ && count_output<=0)
       {
         ROS_WARN("cmd_vel timeout, reset all velocity.");
+        count_output = 2000;
         vel_.reset();
       }
-      else
-      {
-        ROS_INFO_STREAM("Odom Error: " << noise_ << "(m), " << "Accumulation Error: " << sum_noise_ << "(m)");
-      }
+      //else
+      //{
+      //  ROS_INFO_STREAM("Odom Error: " << noise_ << "(m), " << "Accumulation Error: " << sum_noise_ << "(m)");
+      //}
       last_time_ = current_time_;
+      --count_output;
       ptr_rate_->sleep();
     }
   }
