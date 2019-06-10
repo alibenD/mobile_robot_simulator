@@ -16,9 +16,9 @@
 #include <ros/ros.h>
 #include <tf/transform_listener.h>
 #include <sensor_msgs/LaserScan.h>
-#include <mobile_mobile_robot_simulator/environment_map.hh>
-#include <mobile_mobile_robot_simulator/Obstacle.h>
-#include <mobile_mobile_robot_simulator/function.hh>
+#include <mobile_robot_simulator/environment_map.hh>
+#include <mobile_robot_simulator/Obstacle.h>
+#include <mobile_robot_simulator/function.hh>
 #include <memory>
 
 #include <cmath>
@@ -76,8 +76,8 @@ namespace ak
        */
       void map_callback(const nav_msgs::OccupancyGrid::ConstPtr& ptr_grid_map);
 
-      bool obstacleHandleServer(mobile_mobile_robot_simulator::Obstacle::Request &req,
-                                mobile_mobile_robot_simulator::Obstacle::Response &res);
+      bool obstacleHandleServer(mobile_robot_simulator::Obstacle::Request &req,
+                                mobile_robot_simulator::Obstacle::Response &res);
 
     private:
       double min_dist_;   /*!< The minimum distance of lidar detectable*/

@@ -11,7 +11,7 @@
   */
 
 //INCLUDE
-#include <mobile_mobile_mobile_robot_simulator/environment_map.hh>
+#include <mobile_robot_simulator/environment_map.hh>
 #include <iostream>
 
 //CODE

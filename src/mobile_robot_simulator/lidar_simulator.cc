@@ -11,7 +11,7 @@
   */
 
 //INCLUDE
-#include <mobile_mobile_mobile_robot_simulator/lidar_simulator.hh>
+#include <mobile_robot_simulator/lidar_simulator.hh>
 
 //CODE
 namespace ak
@@ -122,8 +122,8 @@ namespace ak
   }
 
 
-  bool LidarSimulator::obstacleHandleServer(mobile_mobile_mobile_robot_simulator::Obstacle::Request &req,
-                                            mobile_mobile_mobile_robot_simulator::Obstacle::Response &res)
+  bool LidarSimulator::obstacleHandleServer(mobile_robot_simulator::Obstacle::Request &req,
+                                            mobile_robot_simulator::Obstacle::Response &res)
   {
     ROS_ERROR_STREAM("Obstacle received!!!!!");
     if (req.type == req.TRANSFORM)

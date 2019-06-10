@@ -13,8 +13,8 @@
   *-----------------------------------------------*/
 
 // Header include
-#include <mobile_mobile_robot_simulator/odometry.hh>
-#include <mobile_mobile_robot_simulator/function.hh>
+#include <mobile_robot_simulator/odometry.hh>
+#include <mobile_robot_simulator/function.hh>
 
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>

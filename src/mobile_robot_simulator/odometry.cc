@@ -11,7 +11,7 @@
   */
 
 //INCLUDE
-#include <mobile_mobile_mobile_robot_simulator/odometry.hh>
+#include <mobile_robot_simulator/odometry.hh>
 
 //CODE
 namespace ak
