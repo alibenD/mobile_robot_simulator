@@ -1,0 +1,20 @@
+<launch>
+  <param name="robot_description" textfile="$(find mobile_robot_simulator)/urdf/agv_skeleton.urdf"/>
+  <node pkg="mobile_robot_simulator" type="odom_sim_node" name="odom_simulator" output="screen">
+    <param name="max_heading_accel" type="double" value="1.0" />
+    <param name="max_rotation_accel" type="double" value="1.0" />
+    <param name="cmd_timeout" type="double" value="0.2" />
+    <param name="frequency" type="double" value="40.0" />
+    <param name="child_frame_id" type="str" value="base_link" />
+    <param name="frame_id" type="str" value="odom" />
+    <param name="axis_radius" type="double" value="0.5" />
+    <param name="noise" type="bool" value="false" />
+  </node>
+
+  <node pkg="map_server" type="map_server" name="map_server" args="$(find mobile_robot_simulator)/map/simulation.yaml" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_map" args="0 0 0 0 0 0 /odom /map 40"/>
+
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mobile_robot_simulator)/rviz/urdf.rviz" />
+</launch>

@@ -1,0 +1,131 @@
+<!--
+  * @Copyright (C) 2018 All rights reserved.
+  * @date: 2018
+  * @file: move_base_simulation.launch
+  * @version: v0.0.1
+  * @author: aliben.develop@gmail.com
+  * @create_date: 2018-11-06 09:46:30
+  * @last_modified_date: 2018-11-06 11:11:09
+  * @brief: TODO
+  * @details: TODO
+  *-->
+
+<launch>
+  <param name="robot_description" textfile="$(find mobile_robot_simulator)/urdf/agv_skeleton.urdf"/>
+
+  <node pkg="mobile_robot_simulator" type="odom_sim_node" name="odom_simulator" output="screen">
+    <param name="max_heading_accel" type="double" value="1.0" />
+    <param name="max_rotation_accel" type="double" value="1.0" />
+    <param name="cmd_timeout" type="double" value="0.2" />
+    <param name="frequency" type="double" value="100.0" />
+    <param name="child_frame_id" type="str" value="base_link" />
+    <param name="frame_id" type="str" value="odom" />
+    <param name="axis_radius" type="double" value="0.5" />
+    <param name="noise" type="bool" value="false" />
+  </node>
+
+  <!--node pkg="mobile_robot_simulator" type="listen_goal" name="goal_error" output="screen" /-->
+
+  <node pkg="mobile_robot_simulator" type="lidar_sim_node" name="lidar_simulator" output="screen">
+    <param name="min_dist" type="double" value="0." />
+    <param name="max_dist" type="double" value="10." />
+    <param name="min_angle" type="double" value="-135.0" />
+    <param name="max_angle" type="double" value="135.0" />
+    <param name="num_of_line" type="int" value="560" />
+    <param name="freq" type="double" value="100" />
+    <param name="global_frame" type="str" value="odom" />
+    <param name="lidar_frame" type="str" value="laser_link" />
+  </node>
+
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <param name="use_map_topic"             value="false"/>
+    <param name="odom_model_type"           value="diff"/>
+    <param name="gui_publish_rate"          value="10.0"/>
+    <param name="laser_max_beams"           value="60"/>
+    <param name="laser_min_range"           value="0.2"/>
+    <param name="laser_max_range"           value="6.0"/>
+    <param name="min_particles"             value="500"/>
+    <param name="max_particles"             value="5000"/>
+    <param name="kld_err"                   value="0.02"/>
+    <param name="kld_z"                     value="0.99"/>
+    <param name="odom_alpha1"               value="0.2"/>
+    <param name="odom_alpha2"               value="0.2"/>
+    <param name="odom_alpha3"               value="0.2"/>
+    <param name="odom_alpha4"               value="0.2"/>
+    <param name="laser_z_hit"               value="0.95"/>
+    <param name="laser_z_short"             value="0.025"/>
+    <param name="laser_z_max"               value="0.025"/>
+    <param name="laser_z_rand"              value="0.05"/>
+    <param name="laser_sigma_hit"           value="0.2"/>
+    <param name="laser_lambda_short"        value="0.1"/>
+    <param name="laser_model_type"          value="likelihood_field"/>
+    <param name="laser_likelihood_max_dist" value="2.0"/>
+    <param name="update_min_d"              value="0.25"/>
+    <param name="update_min_a"              value="0.2"/>
+    <param name="odom_frame_id"             value="odom"/>
+    <param name="base_frame_id"             value="base_link"/>
+    <param name="global_frame_id"           value="map"/>
+    <param name="resample_interval"         value="3"/>
+    <param name="transform_tolerance"       value="0.5"/>
+    <param name="recovery_alpha_slow"       value="0.0"/>
+    <param name="recovery_alpha_fast"       value="0.0"/>
+    <param name="initial_cov_xx"            value="0.25"/>
+    <param name="initial_cov_yy"            value="0.25"/>
+    <param name="initial_cov_aa"            value="10.0"/>
+  </node>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+      <rosparam file="$(find mobile_robot_simulator)/params/move_base_params.yaml" command="load" />
+      <rosparam file="$(find mobile_robot_simulator)/params/global_costmap_params.yaml" command="load" ns="global_costmap"/>
+      <rosparam file="$(find mobile_robot_simulator)/params/local_costmap_params.yaml" command="load" ns="local_costmap"/>
+      <rosparam file="$(find mobile_robot_simulator)/params/global_planner_params.yaml" command="load" ns="GlobalPlanner"/>
+      <rosparam file="$(find mobile_robot_simulator)/params/dwa_local_planner_params.yaml" command="load" ns="DWAPlannerROS"/>
+  </node>
+
+  <node pkg="map_server" type="map_server" name="map_server" args="$(find mobile_robot_simulator)/map/simulation.yaml">
+    <param name="rate" value="100"/>
+  </node>
+  <node pkg="map_server" type="map_server" name="world_server" args="$(find mobile_robot_simulator)/map/simulation.yaml" >
+    <remap from="map" to="world" />
+    <param name="rate" value="100"/>
+  </node>
+  <!--node pkg="tf" type="static_transform_publisher" name="base_link_to_map" args="0 0 0.2 0 0 0 /base_link /lidar_link 40"/-->
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_world" args="0 0 0 0 0 0 /odom /world 40">
+    <param name="rate" value="100"/>
+  </node>
+  <!--node pkg="tf" type="static_transform_publisher" name="map_to_world" args="0 0 0 0 0 0 /map /world 40"/-->
+
+
+  <node name="obstacle_simulation" pkg="mobile_robot_simulator" type="obstacle_simulation" output="screen">
+      <param name="obstacle_id" value="obstacle1" />
+      <param name="inter_marker_id" value="world" />
+      <param name="resolution" value="0.05" />
+      <!--<rosparam param="obstacle_footprints">
+        [[0.1,1.0, 0.1,-1.0, -0.1,-1.0, -0.1,1.0]]
+      </rosparam>-->
+      <rosparam param="obstacle_footprints">
+        [[0.5,0.0, 0.1,0.1, 0.0,0.5, -0.5,0.0, 0.0,-0.5, 0.1,-0.1]]
+      </rosparam>
+  </node>
+
+  <node name="obstacle_simulation_1" pkg="mobile_robot_simulator" type="obstacle_simulation" output="screen">
+      <param name="obstacle_id" value="obstacle2" />
+      <param name="inter_marker_id" value="world" />
+      <param name="resolution" value="0.05" />
+      <rosparam param="obstacle_footprints">
+      [[0.1,1.0, 0.1,-1.0, -0.1,-1.0, -0.1,1.0]]
+      </rosparam>
+<!--<rosparam param="obstacle_footprints">
+      [[0.5,0.0, 0.1,0.1, 0.0,0.5, -0.5,0.0, 0.0,-0.5, 0.1,-0.1]]
+      </rosparam>-->
+  </node>
+
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+    <param name="rate" value="100"/>
+  </node>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="rate" value="100"/>
+  </node>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mobile_robot_simulator)/rviz/urdf.rviz" />
+</launch>
