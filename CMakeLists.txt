@@ -118,7 +118,7 @@ SET( THIRD_PARTY_LIBS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS include include/mobile_robot_simulator
   LIBRARIES mobile_robot_simulator
   CATKIN_DEPENDS interactive_markers message_runtime nav_msgs roscpp tf visualization_msgs
   #DEPENDS system_lib
