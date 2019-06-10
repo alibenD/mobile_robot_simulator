@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-11-06 09:46:30
-  * @last_modified_date: 2019-06-10 14:55:59
+  * @last_modified_date: 2019-06-10 16:26:24
   * @brief: TODO
   * @details: TODO
   *-->
@@ -34,7 +34,7 @@
     <param name="num_of_line" type="int" value="560" />
     <param name="freq" type="double" value="100" />
     <param name="global_frame" type="str" value="odom" />
-    <param name="lidar_frame" type="str" value="laser_link" />
+    <param name="lidar_frame" type="str" value="laser" />
   </node>
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
@@ -82,10 +82,17 @@
       <rosparam file="$(find mobile_robot_simulator)/config/dwa_local_planner_params.yaml" command="load" ns="DWAPlannerROS"/>
   </node>
 
-  <node pkg="map_server" type="map_server" name="map_server" args="$(find mobile_robot_simulator)/map/map_name.yaml">
+  <!--node pkg="map_server" type="map_server" name="map_server" args="$(find mobile_robot_simulator)/map/map_name.yaml">
+    <param name="rate" value="100"/>
+  </node-->
+  <!--node pkg="map_server" type="map_server" name="world_server" args="$(find mobile_robot_simulator)/map/map_name.yaml" >
+    <remap from="map" to="world" />
+    <param name="rate" value="100"/>
+  </node-->
+  <node pkg="map_server" type="map_server" name="map_server" args="map_filename">
     <param name="rate" value="100"/>
   </node>
-  <node pkg="map_server" type="map_server" name="world_server" args="$(find mobile_robot_simulator)/map/map_name.yaml" >
+  <node pkg="map_server" type="map_server" name="world_server" args="map_filename" >
     <remap from="map" to="world" />
     <param name="rate" value="100"/>
   </node>
