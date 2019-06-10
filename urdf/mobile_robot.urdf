@@ -10,7 +10,7 @@
   * @details: TODO
   *-->
 
-<robot name="agv_skeleton">
+<robot name="mobile_robot">
   <link name="base_link">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.125"/>
