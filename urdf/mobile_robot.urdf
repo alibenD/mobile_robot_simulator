@@ -1,0 +1,80 @@
+<!--
+  * @Copyright (C) 2018 All rights reserved.
+  * @date: 2018
+  * @file: mobile_robot.urdf
+  * @version: v0.0.1
+  * @author: aliben.develop@gmail.com
+  * @create_date: 2018-01-31 11:26:41
+  * @last_modified_date: 2019-06-10 11:07:35
+  * @brief: TODO
+  * @details: TODO
+  *-->
+
+<robot name="agv_skeleton">
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.125"/>
+      <geometry>
+        <box size="0.5 0.5 0.15"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 0.5"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="left_wheel_link">
+    <visual>
+      <origin rpy="1.5707963268 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="right_wheel_link">
+    <visual>
+      <origin rpy="1.5707963268 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+  <link name="laser">
+    <visual>
+      <!--origin rpy="0 0 0" xyz="0.25 0 0.24"/-->
+      <geometry>
+        <box size="0.05 0.05 0.08"/>
+      </geometry>
+      <material name="gree">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="joint_base_leftwheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="0 0.25 0.05"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="joint_base_rightwheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="0 -0.25 0.05"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="joint_base_laser" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser"/>
+    <origin xyz="0.25 0 0.24"/>
+  </joint>
+
+</robot>
