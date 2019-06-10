@@ -20,7 +20,7 @@ MAP_FILENAME=${1##*/}
 #---Shell Command
 set -x
 if [ ! -f launch/move_base_${MAP_FILENAME%.*}.launch  ]; then
-  sed 's#map_filename#'$MAP_PATH'#g' launch/move_base_templete.launch > launch/move_base_${MAP_FILENAME%.*}.launch
+  sed 's#map_filename#'$MAP_PATH'#g' launch/move_base_templete.launch > `rospack find mobile_robot_simulator`/launch/move_base_${MAP_FILENAME%.*}.launch
 fi
 if [ "$MAP_PATH" == "" ]; then
 	MAP_FILENAME=simulation
