@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#---Automatically Generated from template 'bash' wrote by @aliben---
+# @Copyright (C) 2018 All rights reserved.
+# @file: run_slam.bash
+# @author: aliben.develop@gmail.com
+# @created_date: 2018-01-12 10:50:07
+# @last_modified_date: 2018-11-12 10:50:35
+# @brief: TODO
+# @details: TODO
+#---***********************************************---
+
+
+#---Variables
+CREATED_TIME=`date '+%Y-%m-%d %H:%M:%S'`
+CREATED_YEAR=`date '+%Y'`
+MAP_PATH=$1
+MAP_FILENAME=${1##*/}
+
+#---Shell Command
+set -x
+if [ ! -f launch/move_base_${MAP_FILENAME%.*}.launch  ]; then
+  sed 's#map_filename#'$MAP_PATH'#g' launch/move_base_templete.launch > launch/move_base_${MAP_FILENAME%.*}.launch
+fi
+if [ "$MAP_PATH" == "" ]; then
+	MAP_FILENAME=simulation
+fi
+echo "map_filename: $MAP_PATH"
+roslaunch mobile_robot_simulator move_base_${MAP_FILENAME%.*}.launch&
+sleep 5
+gnome-terminal --window -e "rostopic pub -1 /initialpose geometry_msgs/PoseWithCovarianceStamped \"header:
+  seq: 0
+  stamp:
+    secs: 0
+    nsecs: 0
+  frame_id: ''
+pose:
+  pose:
+    position: {x: 0.0, y: 0.0, z: 0.0}
+    orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+  covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\" " &&
+fg %1
+set +x
