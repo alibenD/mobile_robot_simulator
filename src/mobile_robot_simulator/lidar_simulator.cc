@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-01-02 13:34:33
-  * @last_modified_date: 2019-06-10 10:58:22
+  * @last_modified_date: 2019-06-10 16:24:19
   * @brief: TODO
   * @details: TODO
   */
@@ -80,7 +80,15 @@ namespace ak
     //tf::StampedTransform transform;
     double theta_at_world, roll, pitch;
     double x_at_world, y_at_world, distance;
-    ptr_tf_listener_->lookupTransform(global_frame_, lidar_frame_, ros::Time(0), tf_);
+    try
+    {
+      ptr_tf_listener_->lookupTransform(global_frame_, lidar_frame_, ros::Time(0), tf_);
+    }
+    catch (tf::TransformException ex)
+    {
+      ROS_ERROR("%s", ex.what());
+      return -1;
+    }
     tf_.getBasis().getRPY(roll, pitch, theta_at_world);
     x_at_world = (double)tf_.getOrigin().getX();
     y_at_world = (double)tf_.getOrigin().getY();
