@@ -63,7 +63,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        laser_link:
+        laser:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -91,7 +91,7 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
-        laser_link:
+        laser:
           Value: true
         left_wheel_link:
           Value: true
@@ -112,7 +112,7 @@ Visualization Manager:
         map:
           odom:
             base_link:
-              laser_link:
+              laser:
                 {}
               left_wheel_link:
                 {}

@@ -25,8 +25,9 @@ if [ "$MAP_PATH" == "" ]; then
 	MAP_FILENAME=simulation
 fi
 echo "map_filename: $MAP_PATH"
-roslaunch mobile_robot_simulator move_base_${MAP_FILENAME%.*}.launch&
-sleep 5
+gnome-terminal --window -e "${SHELL} -ic \"roslaunch mobile_robot_simulator move_base_${MAP_FILENAME%.*}.launch; exec ${SHELL}\""
+
+sleep 3
 gnome-terminal --window -e "rostopic pub -1 /initialpose geometry_msgs/PoseWithCovarianceStamped \"header:
   seq: 0
   stamp:
@@ -39,5 +40,4 @@ pose:
     orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
   covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
     0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\" " &&
-fg %1
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0]\" "

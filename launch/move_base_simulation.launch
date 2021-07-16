@@ -34,7 +34,7 @@
     <param name="num_of_line" type="int" value="560" />
     <param name="freq" type="double" value="100" />
     <param name="global_frame" type="str" value="odom" />
-    <param name="lidar_frame" type="str" value="laser_link" />
+    <param name="lidar_frame" type="str" value="laser" />
   </node>
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
