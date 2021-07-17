@@ -25,9 +25,11 @@ if [ "$MAP_PATH" == "" ]; then
 	MAP_FILENAME=simulation
 fi
 echo "map_filename: $MAP_PATH"
+gnome-terminal --window -e "${SHELL} -ic \"rosrun mobile_robot_simulator teleop_key; exec ${SHELL}\""
+
 gnome-terminal --window -e "${SHELL} -ic \"roslaunch mobile_robot_simulator move_base_${MAP_FILENAME%.*}.launch; exec ${SHELL}\""
 
-sleep 3
+sleep 2
 gnome-terminal --window -e "rostopic pub -1 /initialpose geometry_msgs/PoseWithCovarianceStamped \"header:
   seq: 0
   stamp:
